@@ -1,0 +1,9 @@
+.appbar-text {
+    margin: 20px 0 10px 20px;
+    display: inline-block;
+}
+
+.appbar-hint {
+    margin: 0 0 10px 20px;
+    font-size: smaller;
+}
