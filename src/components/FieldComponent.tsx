@@ -7,12 +7,11 @@ interface Props {
 }
 
 export const FieldComponent: FunctionComponent<Props> = ({ fieldState }) => {
+    const className = 'field-inner ' + (fieldState !== undefined ? `field-${fieldState}` : "");
     return (
         <div className='cell'>
             <div className='field'>
-                <div className='field-inner'>
-                    {fieldState === 'player1' ? 'p1' : fieldState === 'player2' ? 'p2' : '-'}
-                </div>
+                <div className={className} />
             </div>
         </div>
     );

@@ -23,6 +23,16 @@
     border-radius: 100%;
 }
 
+.field-player1 {
+    background-color: #F006;
+    box-shadow: 0px 0px 5px 5px #bbb;
+}
+
+.field-player2 {
+    background-color: #0F06;
+    box-shadow: 0px 0px 5px 5px #bbb;
+}
+
 .field-empty {
     width: 40px;
     height: 40px;
