@@ -4,14 +4,15 @@ import './field.css';
 
 interface Props {
     fieldState: FieldState;
+    onSelect: () => void;
 }
 
-export const FieldComponent: FunctionComponent<Props> = ({ fieldState }) => {
+export const FieldComponent: FunctionComponent<Props> = ({ fieldState, onSelect }) => {
     const className = 'field-inner ' + (fieldState !== undefined ? `field-${fieldState}` : "");
     return (
         <div className='cell'>
             <div className='field'>
-                <div className={className} />
+                <div className={className} onClick={onSelect} />
             </div>
         </div>
     );
