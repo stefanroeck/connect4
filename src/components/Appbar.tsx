@@ -8,7 +8,7 @@ export const Appbar = () => {
     return (<>
         <h1 className='appbar-text'>Frieda's Connect 4</h1>
         <h3 className='appbar-text' style={board.victory ? { color: 'crimson' } : {}}>{status}</h3>
-        <p className='appbar-hint'>Use arrow keys to select column and hit SPACE to set stone.</p>
+        <p className='appbar-hint'>Select the row the play a stone.</p>
     </>
 
     );

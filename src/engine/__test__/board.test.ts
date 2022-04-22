@@ -63,6 +63,7 @@ describe("connect 4", () => {
         11112--
         `));
         expect(board.victory).toEqual('player1');
+        expect(board.nextPlayer).toBeUndefined();
     })
 
     it("player1 wins vertically", () => {
@@ -79,6 +80,7 @@ describe("connect 4", () => {
         ---12--
         `));
         expect(board.victory).toEqual('player1');
+        expect(board.nextPlayer).toBeUndefined();
     })
 
     it("don't execute more turns after victory", () => {

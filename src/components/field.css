@@ -1,6 +1,6 @@
 .cell {
     display: inline-block;
-    width: 10%;
+    width: 12%;
     aspect-ratio: 1;
 }
 
@@ -16,21 +16,43 @@
     display: flex;
     margin: 5px;
     background-color: #FFF6;
-    border: 1px solid black;
     align-items: center;
     justify-content: center;
     flex-grow: 1;
     border-radius: 100%;
+    font-size: 40px;
 }
 
-.field-player1 {
-    background-color: #F006;
-    box-shadow: 0px 0px 5px 5px #bbb;
+.field-none:after {
+    content: ".";
+    color: transparent;
+    text-shadow: none;
 }
 
-.field-player2 {
-    background-color: #0F06;
-    box-shadow: 0px 0px 5px 5px #bbb;
+.field-player1,
+.field-candidate-player1:hover {
+    color: #F006;
+    background-image: -webkit-linear-gradient(top, #f4f1ee, #fff);
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px #fff, inset 0px -3px 1px 1px rgba(204, 198, 197, .5);
+}
+
+.field-player1:after,
+.field-candidate-player1:hover:after {
+    content: "●";
+    text-shadow: 0px -2px 2px #bdb5b4, 2px 2px white;
+}
+
+.field-player2,
+.field-candidate-player2:hover {
+    color: #0F06;
+    background-image: -webkit-linear-gradient(top, #f4f1ee, #fff);
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px #fff, inset 0px -3px 1px 1px rgba(204, 198, 197, .5);
+}
+
+.field-player2:after,
+.field-candidate-player2:hover:after {
+    content: "●";
+    text-shadow: 0px -2px 2px #bdb5b4, 2px 2px white;
 }
 
 .field-empty {

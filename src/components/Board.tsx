@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useBoard } from '../hooks/useBoard';
 import './board.css';
 import { FieldComponent } from './FieldComponent';
-import { RowSelector } from './RowSelector';
 
 export const Board = () => {
     const { board, play } = useBoard();
@@ -12,11 +11,10 @@ export const Board = () => {
     }, [play]);
 
     return <div className='board-background'>
-        <RowSelector />
         {board.fields.map((row, rowIdx) => (
             <div className='board-row' key={rowIdx}>
                 {row.map((f, colIdx) => (
-                    <FieldComponent key={`${rowIdx}-${colIdx}`} fieldState={f} onSelect={() => handleSelect(colIdx)} />
+                    <FieldComponent key={`${rowIdx}-${colIdx}`} fieldState={f} onSelect={() => handleSelect(colIdx)} highlightForPlayer={rowIdx === 0 && f === undefined ? board.nextPlayer : undefined} />
                 ))}
             </div>
 

@@ -1,3 +1,4 @@
+import { ifNotDefined } from "../utils";
 import { emptyArray, Fields, Player, Players, Victory } from "./fields";
 
 export type Options = {
@@ -10,7 +11,7 @@ export type Board = {
     options: Options;
     fields: Fields; // cols, rows
     victory: Victory;
-    nextPlayer: Player;
+    nextPlayer: Player | undefined;
 }
 
 export const newBoard = ({ rows, cols, startPlayer }: Options): Board => {
@@ -43,11 +44,13 @@ export const play = (board: Board, player: Player, col: number): Board => {
     const newFields = board.fields.slice();
     newFields[freeRow][col] = player;
 
+    const victory = checkVictory(board.fields);
+
     return {
         options: board.options,
         fields: newFields,
-        victory: checkVictory(board.fields),
-        nextPlayer: Players[(Players.indexOf(player) + 1) % Players.length]
+        victory,
+        nextPlayer: ifNotDefined(victory, () => Players[(Players.indexOf(player) + 1) % Players.length]),
     };
 };
 
