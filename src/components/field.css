@@ -20,7 +20,11 @@
     justify-content: center;
     flex-grow: 1;
     border-radius: 100%;
-    font-size: 40px;
+    font-size: 2em;
+}
+
+.field-none {
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.3), inset 0px 4px 1px 1px #b3b3b3, inset 0px -3px 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .field-none:after {
