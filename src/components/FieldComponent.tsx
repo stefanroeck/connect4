@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { FieldState, Player } from '../engine/fields';
+import { doNothing } from '../utils';
 import './field.css';
 
 interface Props {
@@ -17,7 +18,7 @@ export const FieldComponent: FunctionComponent<Props> = ({ fieldState, onSelect,
     return (
         <div className='cell'>
             <div className='field'>
-                <div className={className} onClick={onSelect} />
+                <div className={className} onClick={highlightForPlayer ? onSelect : doNothing} />
             </div>
         </div>
     );
