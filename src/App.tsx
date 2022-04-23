@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { TouchBackend } from '../node_modules/react-dnd-touch-backend/dist/index';
+import { DndProvider } from '../node_modules/react-dnd/dist/index';
 import './App.css';
 import { Appbar } from './components/Appbar';
 import { Board } from './components/Board';
@@ -15,8 +17,11 @@ export const App = () => {
   return (
     <div className="App">
       <BoardContext.Provider value={contextValue}>
-        <Appbar />
-        <Board />
+        <DndProvider backend={TouchBackend}>
+          <Appbar />
+          <Board />
+
+        </DndProvider>
       </BoardContext.Provider>
     </div>
   );
