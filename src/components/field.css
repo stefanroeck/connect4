@@ -14,7 +14,7 @@
 
 .field-inner {
     display: flex;
-    margin: 5px;
+    margin: 0.2em;
     background-color: #FFF6;
     align-items: center;
     justify-content: center;
@@ -24,7 +24,7 @@
 }
 
 .field-none {
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.3), inset 0px 4px 1px 1px #b3b3b3, inset 0px -3px 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.3), inset 0px 0.1em 0.1em 0.005em #b3b3b3, inset 0px -0.1em 0.1em 0.05px rgba(255, 255, 255, 0.5);
 }
 
 .field-none:after {
@@ -33,37 +33,24 @@
     text-shadow: none;
 }
 
-.field-player1,
-.field-candidate-player1:hover {
+.field-player1 {
     color: #F006;
     background-image: -webkit-linear-gradient(top, #f4f1ee, #fff);
-    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px #fff, inset 0px -3px 1px 1px rgba(204, 198, 197, .5);
+    box-shadow: 0px 0.2em 0.2em 0px rgba(0, 0, 0, .3), inset 0px 0.1em 0.1em 0.1em #fff, inset 0px -0.1em 0.2em 0.05em rgba(204, 198, 197, .5);
 }
 
-.field-player1:after,
-.field-candidate-player1:hover:after {
+.field-player1:after {
     content: "●";
-    text-shadow: 0px -2px 2px #bdb5b4, 2px 2px white;
+    text-shadow: 0px -0.05em 0.05em #bdb5b4, 0.05em 0.05em white;
 }
 
-.field-player2,
-.field-candidate-player2:hover {
+.field-player2 {
     color: #0F06;
     background-image: -webkit-linear-gradient(top, #f4f1ee, #fff);
-    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px #fff, inset 0px -3px 1px 1px rgba(204, 198, 197, .5);
+    box-shadow: 0px 0.2em 0.2em 0px rgba(0, 0, 0, .3), inset 0px 0.1em 0.1em 0.1em #fff, inset 0px -0.1em 0.2em 0.05em rgba(204, 198, 197, .5);
 }
 
-.field-player2:after,
-.field-candidate-player2:hover:after {
+.field-player2:after {
     content: "●";
-    text-shadow: 0px -2px 2px #bdb5b4, 2px 2px white;
-}
-
-.field-empty {
-    width: 40px;
-    height: 40px;
-    background-image: url('./../assets/EmptyButton.png');
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
-    margin: 20px auto;
+    text-shadow: 0px -0.05em 0.05em #bdb5b4, 0.05em 0.05em white;
 }

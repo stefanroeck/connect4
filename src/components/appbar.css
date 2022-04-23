@@ -1,21 +1,21 @@
 .appbar-container {
     display: flex;
-    height: 150px;
-    border-bottom: 4px solid white;
+    height: 6.2em;
+    border-bottom: 0.2em solid white;
     background-image: url('../assets/sky.png');
     background-repeat: no-repeat;
     background-size: cover;
-    box-shadow: 0 5px 5px grey;
+    box-shadow: 0 0.2em 0.2em grey;
     width: 100%;
     position: fixed;
 }
 
 .appbar-text {
-    margin: 10px 0 10px 20px;
+    margin: 5px 0 5px 10px;
     display: inline-block;
 }
 
 .appbar-hint {
-    margin: 0 0 10px 20px;
+    margin: 0 0 0 10px;
     font-size: smaller;
 }
