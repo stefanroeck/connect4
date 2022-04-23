@@ -1,0 +1,7 @@
+.nextPlayer-container {
+    display: inline-flex;
+    flex-grow: 1;
+    flex-direction: column;
+    margin: 5px;
+    align-items: center;
+}

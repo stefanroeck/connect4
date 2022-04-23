@@ -6,19 +6,16 @@ import './field.css';
 interface Props {
     fieldState: FieldState;
     onSelect: () => void;
-    highlightForPlayer: Player | undefined;
 }
 
-export const FieldComponent: FunctionComponent<Props> = ({ fieldState, onSelect, highlightForPlayer }) => {
-    let className = 'field-inner ' + (fieldState !== undefined ? `field-${fieldState}` : "field-none");
-    if (highlightForPlayer !== undefined) {
-        className += ` field-candidate-${highlightForPlayer}`;
-    }
+export const FieldComponent: FunctionComponent<Props> = ({ fieldState, onSelect }) => {
+    const className = 'field-inner ' + (fieldState !== undefined ? `field-${fieldState}` : "field-none");
+    const canSelect = fieldState === undefined;
 
     return (
         <div className='cell'>
             <div className='field'>
-                <div className={className} onClick={highlightForPlayer ? onSelect : doNothing} />
+                <div className={className} onClick={canSelect ? onSelect : doNothing} />
             </div>
         </div>
     );

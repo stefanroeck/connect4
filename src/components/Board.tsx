@@ -14,7 +14,7 @@ export const Board = () => {
         {board.fields.map((row, rowIdx) => (
             <div className='board-row' key={rowIdx}>
                 {row.map((f, colIdx) => (
-                    <FieldComponent key={`${rowIdx}-${colIdx}`} fieldState={f} onSelect={() => handleSelect(colIdx)} highlightForPlayer={rowIdx === 0 && f === undefined ? board.nextPlayer : undefined} />
+                    <FieldComponent key={`${rowIdx}-${colIdx}`} fieldState={f} onSelect={() => handleSelect(colIdx)} />
                 ))}
             </div>
 
