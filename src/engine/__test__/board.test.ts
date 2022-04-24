@@ -83,6 +83,118 @@ describe("connect 4", () => {
         expect(board.nextPlayer).toBeUndefined();
     })
 
+
+    it("player1 wins diagonally topLeft to bottomRight in left half", () => {
+        let board = newBoard({ rows: 6, cols: 7, startPlayer: 'player1' });
+
+        board = play(board, 'player1', 4);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 3);
+        board = play(board, 'player2', 2);
+        board = play(board, 'player1', 2);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 2);
+        board = play(board, 'player2', 1);
+        board = play(board, 'player1', 1);
+        board = play(board, 'player2', 1);
+        board = play(board, 'player1', 1);
+
+        expect(board.fields).toEqual(stringToFields(`
+        -------
+        -------
+        -1-----
+        -212---
+        -111---
+        -2221--
+        `));
+        expect(board.victory).toEqual('player1');
+        expect(board.nextPlayer).toBeUndefined();
+    })
+
+
+    it("player1 wins diagonally topLeft to bottomRight in right half", () => {
+        let board = newBoard({ rows: 6, cols: 7, startPlayer: 'player1' });
+
+        board = play(board, 'player1', 6);
+        board = play(board, 'player2', 5);
+        board = play(board, 'player1', 5);
+        board = play(board, 'player2', 4);
+        board = play(board, 'player1', 4);
+        board = play(board, 'player2', 5);
+        board = play(board, 'player1', 4);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 3);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 3);
+
+        expect(board.fields).toEqual(stringToFields(`
+        -------
+        -------
+        ---1---
+        ---212-
+        ---111-
+        ---2221
+        `));
+        expect(board.victory).toEqual('player1');
+        expect(board.nextPlayer).toBeUndefined();
+    })
+
+    it("player2 wins diagonally topRight to bottomLeft in right half", () => {
+        let board = newBoard({ rows: 6, cols: 7, startPlayer: 'player1' });
+
+        board = play(board, 'player1', 3);
+        board = play(board, 'player2', 2);
+        board = play(board, 'player1', 2);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 4);
+        board = play(board, 'player2', 5);
+        board = play(board, 'player1', 4);
+        board = play(board, 'player2', 4);
+        board = play(board, 'player1', 5);
+        board = play(board, 'player2', 5);
+        board = play(board, 'player1', 6);
+        board = play(board, 'player2', 5);
+
+        expect(board.fields).toEqual(stringToFields(`
+        -------
+        -------
+        -----2-
+        ----22-
+        --1211-
+        --21121
+        `));
+        expect(board.victory).toEqual('player2');
+        expect(board.nextPlayer).toBeUndefined();
+    })
+
+    it("player2 wins diagonally topRight to bottomLeft in left half", () => {
+        let board = newBoard({ rows: 6, cols: 7, startPlayer: 'player1' });
+
+        board = play(board, 'player1', 1);
+        board = play(board, 'player2', 0);
+        board = play(board, 'player1', 0);
+        board = play(board, 'player2', 1);
+        board = play(board, 'player1', 2);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 2);
+        board = play(board, 'player2', 2);
+        board = play(board, 'player1', 3);
+        board = play(board, 'player2', 3);
+        board = play(board, 'player1', 4);
+        board = play(board, 'player2', 3);
+
+        expect(board.fields).toEqual(stringToFields(`
+        -------
+        -------
+        ---2---
+        --22---
+        1211---
+        21121--
+        `));
+        expect(board.victory).toEqual('player2');
+        expect(board.nextPlayer).toBeUndefined();
+    })
+
     it("don't execute more turns after victory", () => {
         let board = newBoard({ rows: 6, cols: 7, startPlayer: 'player1' });
 
