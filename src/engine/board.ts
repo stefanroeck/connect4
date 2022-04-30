@@ -1,11 +1,12 @@
 import { ifNotDefined } from "../utils";
 import { emptyArray, Fields, FieldState, Player, Players, Victory } from "./fields";
-import mixpanel from 'mixpanel-browser';
+import { Events, NoopEvents } from "../events/events";
 
 export type Options = {
     cols: number;
     rows: number;
     startPlayer?: Player;
+    events?: () => Events;
 }
 
 export type Board = {
@@ -13,17 +14,19 @@ export type Board = {
     fields: Fields;
     victory: Victory;
     nextPlayer: Player | undefined;
+    _events?: Events;
 }
 
-export const newBoard = ({ rows, cols, startPlayer }: Options): Board => {
-    return existingBoard(emptyArray(rows, cols), startPlayer);
+export const newBoard = ({ rows, cols, startPlayer, events }: Options): Board => {
+    return existingBoard(emptyArray(rows, cols), startPlayer, events);
 }
 
-export const existingBoard = (fields: Fields, startPlayer: Player): Board => {
+export const existingBoard = (fields: Fields, startPlayer: Player, events: () => Events = () => NoopEvents): Board => {
     return {
         options: {
             cols: fields[0].length,
-            rows: fields.length
+            rows: fields.length,
+            events,
         },
         fields,
         victory: checkVictory(fields),
@@ -33,7 +36,8 @@ export const existingBoard = (fields: Fields, startPlayer: Player): Board => {
 
 export const play = (board: Board, player: Player, col: number): Board => {
     if (isFirstMove(board)) {
-        mixpanel.track('Start Game');
+        board._events = board.options.events();
+        board._events.startGame();
     }
 
     if (board.victory) {
@@ -50,6 +54,9 @@ export const play = (board: Board, player: Player, col: number): Board => {
     newFields[freeRow][col] = player;
 
     const victory = checkVictory(board.fields);
+    if (victory !== undefined) {
+        board._events?.finishGame(victory);
+    }
 
     return {
         options: board.options,
@@ -67,20 +74,20 @@ const dimensions = (fields: Fields): { rows: number, cols: number } => {
 }
 
 const checkVictory = (fields: Fields): Victory => {
-    let victory = undefined;
-    ['player1', 'player2'].forEach(player => {
+    let victory: Victory = undefined;
+    Players.forEach(player => {
         const { cols, rows, diagonalsTopLeftBottomRight, diagonalsTopRightBottomLeft } = victoryConditions(fields);
 
         [cols, rows, diagonalsTopLeftBottomRight, diagonalsTopRightBottomLeft].forEach(conditions => {
             const fourConsecutiveFields: boolean = conditions.some(r => r.join('').includes(player.repeat(4)));
             if (fourConsecutiveFields) {
-                victory = player;
+                victory = {
+                    fields: [],
+                    player,
+                };
             }
         });
     });
-    if (victory !== undefined) {
-        mixpanel.track('Finish Game', { winner: victory });
-    }
     return victory;
 }
 

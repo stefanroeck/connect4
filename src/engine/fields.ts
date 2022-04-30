@@ -1,6 +1,9 @@
 export type Player = 'player1' | 'player2'
 export type FieldState = Player | undefined;
-export type Victory = Player | undefined;
+export type Victory = {
+    player: Player,
+    fields: FieldState[],
+} | undefined;
 export type Fields = FieldState[][];
 
 export const Players: Player[] = ['player1', 'player2'];

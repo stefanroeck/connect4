@@ -17,7 +17,7 @@ describe("connect 4", () => {
         ---1---
         `));
         expect(board.victory).toBeUndefined();
-        expect(board.options).toEqual({ cols: 7, rows: 6 });
+        expect(board.options).toMatchObject({ cols: 7, rows: 6 });
         expect(board.nextPlayer).toEqual('player2');
     })
 
@@ -62,7 +62,7 @@ describe("connect 4", () => {
         -212---
         11112--
         `));
-        expect(board.victory).toEqual('player1');
+        expect(board.victory.player).toEqual('player1');
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -79,7 +79,7 @@ describe("connect 4", () => {
         ---12--
         ---12--
         `));
-        expect(board.victory).toEqual('player1');
+        expect(board.victory.player).toEqual('player1');
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -107,7 +107,7 @@ describe("connect 4", () => {
         -111---
         -2221--
         `));
-        expect(board.victory).toEqual('player1');
+        expect(board.victory.player).toEqual('player1');
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -135,7 +135,7 @@ describe("connect 4", () => {
         ---111-
         ---2221
         `));
-        expect(board.victory).toEqual('player1');
+        expect(board.victory.player).toEqual('player1');
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -163,7 +163,7 @@ describe("connect 4", () => {
         --1211-
         --21121
         `));
-        expect(board.victory).toEqual('player2');
+        expect(board.victory.player).toEqual('player2');
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -191,7 +191,7 @@ describe("connect 4", () => {
         1211---
         21121--
         `));
-        expect(board.victory).toEqual('player2');
+        expect(board.victory.player).toEqual('player2');
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -201,7 +201,7 @@ describe("connect 4", () => {
         board = playUntilPlayer1Wins(board);
 
         expect(play(board, 'player2', 4)).toEqual(board);
-        expect(board.victory).toEqual('player1');
+        expect(board.victory.player).toEqual('player1');
     })
 
     const playUntilPlayer1Wins = (initialBoard: Board): Board => {
