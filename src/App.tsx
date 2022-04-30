@@ -8,7 +8,7 @@ import { BoardContext, defaultBoard } from './hooks/useBoard';
 
 export const App = () => {
   useEffect(() => {
-    mixpanel.init('abca18936b0e1222e3fb9ca503319cd7', { debug: true, ignore_dnt: false });
+    mixpanel.init(process.env.REACT_APP_MIXPANEL_ID, { debug: true, ignore_dnt: false });
     mixpanel.track('Open Page');
   }, []);
 
