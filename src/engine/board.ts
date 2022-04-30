@@ -1,5 +1,6 @@
 import { ifNotDefined } from "../utils";
 import { emptyArray, Fields, FieldState, Player, Players, Victory } from "./fields";
+import mixpanel from 'mixpanel-browser';
 
 export type Options = {
     cols: number;
@@ -31,6 +32,10 @@ export const existingBoard = (fields: Fields, startPlayer: Player): Board => {
 }
 
 export const play = (board: Board, player: Player, col: number): Board => {
+    if (isFirstMove(board)) {
+        mixpanel.track('Start Game');
+    }
+
     if (board.victory) {
         return board;
     }
@@ -73,6 +78,9 @@ const checkVictory = (fields: Fields): Victory => {
             }
         });
     });
+    if (victory !== undefined) {
+        mixpanel.track('Finish Game', { winner: victory });
+    }
     return victory;
 }
 
@@ -139,3 +147,7 @@ const getDiagonalsTopRightBottomLeft = (fields: Fields): FieldState[][] => {
     }
     return result;
 }
+function isFirstMove(board: Board): boolean {
+    return board.fields[dimensions(board.fields).rows - 1].filter(c => c !== undefined).length === 0;
+}
+
