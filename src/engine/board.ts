@@ -1,5 +1,5 @@
 import { ifNotDefined } from "../utils";
-import { emptyArray, Fields, FieldState, Player, Players, Victory } from "./fields";
+import { emptyFieldArray, Field, Fields, FieldState, Player, Players, Victory } from "./fields";
 import { Events, NoopEvents } from "../events/events";
 
 export type Options = {
@@ -9,16 +9,17 @@ export type Options = {
     events?: () => Events;
 }
 
-export type Board = {
+export interface Board {
     options: Options;
     fields: Fields;
+    fieldStates: () => FieldState[][];
     victory: Victory;
     nextPlayer: Player | undefined;
     _events?: Events;
 }
 
 export const newBoard = ({ rows, cols, startPlayer, events }: Options): Board => {
-    return existingBoard(emptyArray(rows, cols), startPlayer, events);
+    return existingBoard(emptyFieldArray(rows, cols), startPlayer, events);
 }
 
 export const existingBoard = (fields: Fields, startPlayer: Player, events: () => Events = () => NoopEvents): Board => {
@@ -29,6 +30,7 @@ export const existingBoard = (fields: Fields, startPlayer: Player, events: () =>
             events,
         },
         fields,
+        fieldStates: fieldStates(fields),
         victory: checkVictory(fields),
         nextPlayer: startPlayer,
     }
@@ -44,14 +46,14 @@ export const play = (board: Board, player: Player, col: number): Board => {
         return board;
     }
 
-    const fullCol = board.fields.flatMap(row => row[col]);
-    const freeRow = fullCol.lastIndexOf(undefined);
+    const fullCol = board.fields.flatMap(row => row[col]).reverse();
+    const freeRow = board.options.rows - fullCol.findIndex((row) => row.state === undefined) - 1;
     if (freeRow === -1) {
         return board;
     }
 
     const newFields = board.fields.slice();
-    newFields[freeRow][col] = player;
+    newFields[freeRow][col] = { ...newFields[freeRow][col], state: player };
 
     const victory = checkVictory(board.fields);
     if (victory !== undefined) {
@@ -61,6 +63,7 @@ export const play = (board: Board, player: Player, col: number): Board => {
     return {
         options: board.options,
         fields: newFields,
+        fieldStates: fieldStates(newFields),
         victory,
         nextPlayer: ifNotDefined(victory, () => Players[(Players.indexOf(player) + 1) % Players.length]),
     };
@@ -75,17 +78,30 @@ const dimensions = (fields: Fields): { rows: number, cols: number } => {
 
 const checkVictory = (fields: Fields): Victory => {
     let victory: Victory = undefined;
-    Players.forEach(player => {
-        const { cols, rows, diagonalsTopLeftBottomRight, diagonalsTopRightBottomLeft } = victoryConditions(fields);
+    const { cols, rows, diagonalsTopLeftBottomRight, diagonalsTopRightBottomLeft } = victoryConditions(fields);
 
-        [cols, rows, diagonalsTopLeftBottomRight, diagonalsTopRightBottomLeft].forEach(conditions => {
-            const fourConsecutiveFields: boolean = conditions.some(r => r.join('').includes(player.repeat(4)));
-            if (fourConsecutiveFields) {
-                victory = {
-                    fields: [],
-                    player,
-                };
-            }
+    [cols, rows, diagonalsTopLeftBottomRight, diagonalsTopRightBottomLeft].forEach(conditions => {
+        conditions.forEach(condition => {
+            let consecutiveFields = 0;
+            let lastField: Field = undefined;
+            condition.forEach((field, index) => {
+                if (lastField === undefined) {
+                    // first field
+                    consecutiveFields = field.state !== undefined ? 1 : 0;
+                } else {
+                    if (lastField.state !== field.state) {
+                        consecutiveFields = field.state !== undefined ? 1 : 0;
+                    } else if (field.state !== undefined) {
+                        if (++consecutiveFields === 4) {
+                            victory = {
+                                fields: condition.slice(index - 3, index + 1),
+                                player: field.state,
+                            };
+                        }
+                    }
+                }
+                lastField = field;
+            });
         });
     });
     return victory;
@@ -100,9 +116,9 @@ const victoryConditions = (fields: Fields) => {
     }
 }
 
-const getColumns = (fields: Fields): FieldState[][] => {
+const getColumns = (fields: Fields): Field[][] => {
     const { cols, rows } = dimensions(fields);
-    const result = emptyArray(cols, rows);
+    const result = emptyFieldArray(cols, rows);
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
             result[c][r] = fields[r][c];
@@ -111,7 +127,7 @@ const getColumns = (fields: Fields): FieldState[][] => {
     return result;
 }
 
-const getDiagonalsTopLeftBottomRight = (fields: Fields): FieldState[][] => {
+const getDiagonalsTopLeftBottomRight = (fields: Fields): Field[][] => {
     const { cols, rows } = dimensions(fields);
     const result = [];
 
@@ -133,7 +149,7 @@ const getDiagonalsTopLeftBottomRight = (fields: Fields): FieldState[][] => {
     return result;
 }
 
-const getDiagonalsTopRightBottomLeft = (fields: Fields): FieldState[][] => {
+const getDiagonalsTopRightBottomLeft = (fields: Fields): Field[][] => {
     const { cols, rows } = dimensions(fields);
     const result = [];
 
@@ -154,7 +170,14 @@ const getDiagonalsTopRightBottomLeft = (fields: Fields): FieldState[][] => {
     }
     return result;
 }
+
 function isFirstMove(board: Board): boolean {
-    return board.fields[dimensions(board.fields).rows - 1].filter(c => c !== undefined).length === 0;
+    return board.fields[dimensions(board.fields).rows - 1].filter(c => c.state !== undefined).length === 0;
 }
 
+const fieldStates: (fields: Fields) => () => FieldState[][] = (fields: Fields) => {
+    return () => {
+        return fields.map(r => r.map(c => c.state));
+    }
+
+}

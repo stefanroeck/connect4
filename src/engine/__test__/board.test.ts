@@ -8,7 +8,7 @@ describe("connect 4", () => {
 
         board = play(board, 'player1', 3);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         -------
@@ -29,7 +29,7 @@ describe("connect 4", () => {
         board = play(board, 'player1', 3);
         board = play(board, 'player2', 4);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         -------
@@ -54,7 +54,7 @@ describe("connect 4", () => {
         board = play(board, 'player2', 1);
         board = play(board, 'player1', 0);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         -------
@@ -63,6 +63,7 @@ describe("connect 4", () => {
         11112--
         `));
         expect(board.victory.player).toEqual('player1');
+        expect(board.victory.fields.map(f => f.id)).toEqual(['5-0', '5-1', '5-2', '5-3']);
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -71,7 +72,7 @@ describe("connect 4", () => {
 
         board = playUntilPlayer1Wins(board);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         ---1---
@@ -80,6 +81,7 @@ describe("connect 4", () => {
         ---12--
         `));
         expect(board.victory.player).toEqual('player1');
+        expect(board.victory.fields.map(f => f.id)).toEqual(['2-3', '3-3', '4-3', '5-3']);
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -99,7 +101,7 @@ describe("connect 4", () => {
         board = play(board, 'player2', 1);
         board = play(board, 'player1', 1);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         -1-----
@@ -108,6 +110,7 @@ describe("connect 4", () => {
         -2221--
         `));
         expect(board.victory.player).toEqual('player1');
+        expect(board.victory.fields.map(f => f.id)).toEqual(['2-1', '3-2', '4-3', '5-4']);
         expect(board.nextPlayer).toBeUndefined();
     })
 
@@ -127,7 +130,7 @@ describe("connect 4", () => {
         board = play(board, 'player2', 3);
         board = play(board, 'player1', 3);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         ---1---
@@ -155,7 +158,7 @@ describe("connect 4", () => {
         board = play(board, 'player1', 6);
         board = play(board, 'player2', 5);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         -----2-
@@ -183,7 +186,7 @@ describe("connect 4", () => {
         board = play(board, 'player1', 4);
         board = play(board, 'player2', 3);
 
-        expect(board.fields).toEqual(stringToFields(`
+        expect(board.fieldStates()).toEqual(stringToFields(`
         -------
         -------
         ---2---
