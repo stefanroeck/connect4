@@ -1,11 +1,18 @@
 {
     "compilerOptions": {
-        "target": "ES2018",
+        "target": "es5",
         "esModuleInterop": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "lib": [
-            "DOM",
+            "dom",
+            "dom.iterable",
+            "esnext",
             "ES2021.String"
-        ]
-    }
+        ],
+        "module": "esnext",
+        "moduleResolution": "node",
+    },
+    "include": [
+        "src"
+    ]
 }
