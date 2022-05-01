@@ -5,11 +5,15 @@ import './field.css';
 
 interface Props {
     field: Field;
+    highlight: boolean;
     onSelect: () => void;
 }
 
-export const FieldComponent: FunctionComponent<Props> = ({ field, onSelect }) => {
-    const className = 'field-inner ' + (field.state !== undefined ? `field-${field.state}` : "field-none");
+export const FieldComponent: FunctionComponent<Props> = ({ field, highlight, onSelect }) => {
+    let className = 'field-inner ' + (field.state !== undefined ? `field-${field.state}` : "field-none");
+    if (highlight) {
+        className += ' field-highlight';
+    }
     const canSelect = field.state === undefined;
 
     return (

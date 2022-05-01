@@ -11,11 +11,13 @@ export const NextPlayer = () => {
     const field: Field = {
         id: 'nextPlayer',
         state: player,
+        row: -1,
+        col: -1,
     }
     return (<div className='nextPlayer-container'>
         {<>
             <div className='nextPlayer-field'>
-                <FieldComponent field={field} onSelect={doNothing} />
+                <FieldComponent field={field} onSelect={doNothing} highlight={false} />
             </div>
             <p className='nextPlayer-text'>{player}, {status}</p>
         </>

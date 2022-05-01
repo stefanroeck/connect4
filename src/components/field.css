@@ -54,3 +54,7 @@
     content: "●";
     text-shadow: 0px -0.05em 0.05em #bdb5b4, 0.05em 0.05em white;
 }
+
+.field-highlight {
+    border: 0.1em solid #444;
+}

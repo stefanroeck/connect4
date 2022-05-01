@@ -3,6 +3,8 @@ export type FieldState = Player | undefined;
 export type Field = {
     state: FieldState,
     id: string,
+    row: number,
+    col: number,
 }
 export type Victory = {
     player: Player,
@@ -52,7 +54,7 @@ export const emptyArray = <T>(rows: number, cols: number, value: (r: number, c: 
 }
 
 export const emptyFieldArray = (rows: number, cols: number): Fields => {
-    return emptyArray<Field>(rows, cols, (r, c) => { return { id: `${r}-${c}`, state: undefined } });
+    return emptyArray<Field>(rows, cols, (row, col) => { return { id: `${row}-${col}`, state: undefined, row, col } });
 }
 
 export const fieldToChar = (r: FieldState): string => {
