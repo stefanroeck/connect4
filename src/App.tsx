@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { Appbar } from './components/Appbar';
 import { Board } from './components/Board';
@@ -12,8 +12,9 @@ export const App = () => {
     updateBoard,
     play: (col: number) => updateBoard(play(board, board.nextPlayer, col))
   }
+  const [theme] = useState(Math.round(Math.random() * 100.0) % 2);
   return (
-    <div className="App">
+    <div className={`App App-theme${theme}`}>
       <BoardContext.Provider value={contextValue}>
         <Appbar />
         <Board />

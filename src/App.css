@@ -56,11 +56,18 @@
 
 
 .App {
-  background-image: url('./assets/Summer1.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   position: absolute;
   width: 100%;
   font-weight: lighter;
+}
+
+.App-theme0 {
+  background-image: url('./assets/Summer1.jpg');
+}
+
+.App-theme1 {
+  background-image: url('./assets/Winter1.jpg');
 }
