@@ -1,8 +1,15 @@
 .nextPlayer-container {
-    display: inline-flex;
-    flex-grow: 1;
-    flex-direction: column;
-    margin: 5px;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    margin: 0 0 0 15px;
+}
+
+.nextPlayer-field {
+    font-size: 0.3em;
+    display: inline-block;
+}
+
+.nextPlayer-text {
+    margin: 0 0 0 5px;
+    font-size: smaller;
+    display: inline-block;
 }

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useBoard } from '../hooks/useBoard';
 import './board.css';
 import { FieldComponent } from './FieldComponent';
@@ -6,7 +6,6 @@ import { FieldComponent } from './FieldComponent';
 export const Board = () => {
     const { board, play } = useBoard();
     const handleSelect = useCallback((col: number) => {
-        console.log('onSelect');
         play(col);
     }, [play]);
 

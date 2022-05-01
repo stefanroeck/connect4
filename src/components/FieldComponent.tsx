@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Field } from '../engine/fields';
 import { doNothing } from '../utils';
 import './field.css';

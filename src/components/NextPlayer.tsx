@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field } from '../engine/fields';
 import { useBoard } from "../hooks/useBoard"
 import { doNothing } from '../utils';
@@ -7,13 +6,19 @@ import './nextPlayer.css';
 
 export const NextPlayer = () => {
     const { board } = useBoard();
+    const player = board.victory === undefined ? board.nextPlayer : board.victory.player;
+    const status = board.victory === undefined ? 'your turn!' : 'you won!';
     const field: Field = {
         id: 'nextPlayer',
-        state: board.nextPlayer
+        state: player,
     }
     return (<div className='nextPlayer-container'>
-        {board.victory === undefined &&
-            <FieldComponent field={field} onSelect={doNothing} />
+        {<>
+            <div className='nextPlayer-field'>
+                <FieldComponent field={field} onSelect={doNothing} />
+            </div>
+            <p className='nextPlayer-text'>{player}, {status}</p>
+        </>
         }
     </div>
 
