@@ -1,22 +1,22 @@
 import React, { FunctionComponent } from 'react';
-import { FieldState } from '../engine/fields';
+import { Field } from '../engine/fields';
 import { doNothing } from '../utils';
 import './field.css';
 
 interface Props {
-    fieldState: FieldState;
+    field: Field;
     onSelect: () => void;
 }
 
-export const FieldComponent: FunctionComponent<Props> = ({ fieldState, onSelect }) => {
-    const className = 'field-inner ' + (fieldState !== undefined ? `field-${fieldState}` : "field-none");
-    const canSelect = fieldState === undefined;
+export const FieldComponent: FunctionComponent<Props> = ({ field, onSelect }) => {
+    const className = 'field-inner ' + (field.state !== undefined ? `field-${field.state}` : "field-none");
+    const canSelect = field.state === undefined;
 
     return (
         <>
             <div className='cell' >
                 <div className='field' >
-                    <div className={className} onClick={canSelect ? onSelect : doNothing} />
+                    <div className={className} key={field.id} onClick={canSelect ? onSelect : doNothing} />
                 </div>
             </div>
         </>
